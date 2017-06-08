@@ -1,0 +1,1 @@
+quagga_bgp_neighbor       state:GAUGE:0:6 uptime:GAUGE:0:4294967295 prefixes:GAUGE:0:U

@@ -1,17 +1,16 @@
-# Collectd plugin for BIRD
+# Collectd plugin for Cumulus Quagga/FRR
 
-This plugin will collectd various metrics from BIRD. It collects:
+This plugin will collect BGP neighbor-related metrics from Quagga for
+a given family. It's quite rudimentary.
 
- - memory stats
- - BFD sessions
- - BGP sessions
- - route stats
+It requires a version of Quagga able to understand the `show bgp <afi>
+<safi> summary json` commands (Quagga from Cumulus, FRR).
 
 ## Installation
 
 The plugin should be copied in `/usr/share/collectd/python/` or
 another place specified by `ModulePath` in the Python plugin
-configuration. The `types.bird.db` file also needs to be copied in
+configuration. The `types.quagga.db` file also needs to be copied in
 `/usr/share/collectd/` and registered with `TypesDB`.
 
 ## Configuration
@@ -19,27 +18,19 @@ configuration. The `types.bird.db` file also needs to be copied in
 This should be used like this:
 
     LoadPlugin python
-    TypesDB "/usr/share/collectd/types.bird.db"
+    TypesDB "/usr/share/collectd/types.quagga.db"
 
     <Plugin python>
       ModulePath "/usr/share/collectd/python"
-      Import "bird"
-      <Module bird>
-        socket "/var/run/bird/bird.ctl"
-        instance "v4"
+      Import "quagga"
+      <Module quagga>
+        socket "/var/run/quagga/bgpd.vty"
+        family "evpn"
       </Module>
     </Plugin>
 
 Only the configuration keys exposed in the example are valid. Their
 default values are the ones in the example.
-
-## BIRD configuration
-
-It is required to use the following configuration settings to get
-proper dates from BIRD:
-
-    timeformat route iso long;
-    timeformat protocol iso long;
 
 # Testing
 

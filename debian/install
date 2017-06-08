@@ -1,2 +1,2 @@
-bird.py usr/share/collectd/python
-types.bird.db usr/share/collectd
+quagga.py usr/share/collectd/python
+types.quagga.db usr/share/collectd

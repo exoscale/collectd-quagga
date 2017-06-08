@@ -1,9 +1,9 @@
-Source: collectd-bird
+Source: collectd-quagga
 Maintainer: Vincent Bernat <bernat@debian.org>
 Build-Depends: debhelper (>= 9),
                lsb-release
 
-Package: collectd-bird
+Package: collectd-quagga
 Architecture: all
 Depends: collectd-core
-Description: plugin to collect metrics from BIRD
+Description: plugin to collect metrics from Quagga
