@@ -130,11 +130,11 @@ class QuaggaCollectd(object):
             k = bgp[p].get("hostname")
             if not k:
                 k = p
-            self.dispatch([bgp[k].get("state", 0),
-                           bgp[k].get("uptime", 0),
-                           bgp[k].get("prefixes", 0)],
+            self.dispatch([bgp[p].get("state", 0),
+                           bgp[p].get("uptime", 0),
+                           bgp[p].get("prefixes", 0)],
                           "bgp_{}".format(self.family).replace(" ", "_"),
-                          "quagga_bgp_neighbor", p)
+                          "quagga_bgp_neighbor", k)
 
 
 quagga = QuaggaCollectd()
