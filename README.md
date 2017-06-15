@@ -25,7 +25,7 @@ This should be used like this:
       Import "quagga"
       <Module quagga>
         socket "/var/run/quagga/bgpd.vty"
-        family "evpn"
+        family "ipv4 unicast"
       </Module>
     </Plugin>
 
