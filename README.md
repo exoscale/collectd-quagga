@@ -26,6 +26,7 @@ This should be used like this:
       <Module quagga>
         socket "/var/run/quagga/bgpd.vty"
         family "ipv4 unicast"
+        usehostname true
       </Module>
     </Plugin>
 

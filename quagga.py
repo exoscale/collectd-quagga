@@ -83,6 +83,7 @@ class QuaggaCollectd(object):
 
     socket = "/var/run/quagga/bgpd.vty"
     family = "ipv4 unicast"
+    usehostname = True
 
     def configure(self, conf, **kwargs):
 
@@ -103,6 +104,13 @@ class QuaggaCollectd(object):
                     raise ValueError("config: instance expects exactly "
                                      "one argument")
                 self.family = kwargs[keyword][0]
+            elif keyword == "usehostname":
+                if len(kwargs[keyword]) != 1:
+                    raise ValueError("config: usehostname expects exactly "
+                                     "one argument")
+                if not isinstance(kwargs[keyword][0], bool):
+                    raise ValueError("config: usehostname expects a bool")
+                self.usehostname = kwargs[keyword][0]
             else:
                 raise ValueError("config: unknown keyword "
                                  "`{}`".format(keyword))
@@ -127,9 +135,9 @@ class QuaggaCollectd(object):
         # BGP
         bgp = self.quagga.get_bgp_neighbors(self.family)
         for p in bgp:
-            k = bgp[p].get("hostname")
-            if not k:
-                k = p
+            k = p
+            if self.usehostname:
+                k = bgp[p].get("hostname", k)
             self.dispatch([bgp[p].get("state", 0),
                            bgp[p].get("uptime", 0),
                            bgp[p].get("prefixes", 0)],
