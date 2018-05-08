@@ -1,4 +1,4 @@
-collectd-quagga (0-0) UNRELEASED; urgency=medium
+collectd-quagga (0.0-0) UNRELEASED; urgency=medium
 
   * Fake entry.
 
