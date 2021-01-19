@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import json
 import socket
 import collectd
-
+import sys
 
 class Quagga(object):
 
@@ -63,11 +63,18 @@ class Quagga(object):
 
             # Send the query
             collectd.debug("query: send {}".format(query))
-            sock.send("{}\0".format(query))
+            if sys.version_info > (3, 0):
+                sock.sendall(("{}\0".format(query)).encode())
+            else:
+                sock.sendall("{}\0".format(query))
+
 
             data = []
             while True:
-                more = sock.recv(1024)
+                if sys.version_info > (3, 0):
+                    more = sock.recv(1024).decode()
+                else:
+                    more = sock.recv(1024)
                 if not more:
                     break
                 collectd.debug("query: got {}".format(more.rstrip('\x00')))
